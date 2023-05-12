@@ -3,7 +3,7 @@ import regions from '../prisma/data/regions.json';
 
 const prisma = new PrismaClient()
 
-const regionData: Prisma.UserCreateInput[] = regions;
+const regionData: Prisma.RegionCreateInput[] = regions;
 
 const userData: Prisma.UserCreateInput[] = [
     {
@@ -61,7 +61,10 @@ async function main() {
     }
 
     for (const r of regionData) {
-      console.log(`Added Region`)
+        const region = await prisma.region.create({
+            data: r,
+        })
+      console.log(`Added Region '${region.name}' (${region.code}) with id: ${region.id}`)
     }
 
     console.log(`Seeding finished.`)

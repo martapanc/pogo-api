@@ -145,6 +145,46 @@ app.get('/feed', async (req, res) => {
   res.json(posts)
 })
 
+app.post('/region', async (req, res) => {
+  const name = req.body.name
+  const code = req.body.code
+
+  const region = await prisma.region.create({
+    data: {
+      name,
+      code
+    }
+  })
+
+  res.json(region)
+})
+
+app.get('/region', async (req, res) => {
+  const { search, skip, take, orderBy } = req.query
+
+  const or: Prisma.RegionWhereInput = search
+      ? {
+        OR: [
+          { name: { contains: search as string } },
+          { code: { contains: search as string } },
+        ],
+      }
+      : {}
+
+  const regions = await prisma.region.findMany({
+    where: {
+        ...or
+    },
+    take: Number(take) || undefined,
+    skip: Number(skip) || undefined,
+    orderBy: {
+      name: orderBy as Prisma.SortOrder,
+    },
+  })
+
+  res.json(regions)
+})
+
 const server = app.listen(3000, () =>
   console.log(`
 🚀 Server ready at: http://localhost:3000
