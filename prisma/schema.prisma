@@ -25,3 +25,18 @@ model Post {
   author    User?    @relation(fields: [authorId], references: [id])
   authorId  Int?
 }
+
+model Player {
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  nickname    String
+  trainerCode String
+  location    String?
+  region      String
+}
+
+model Region {
+  id   Int    @id @default(autoincrement())
+  name String
+  code String
+}

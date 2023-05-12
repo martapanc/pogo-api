@@ -1,0 +1,74 @@
+[
+  {
+    "name": "archipelago",
+    "code": "AP"
+  },
+  {
+    "name": "continental",
+    "code": "CN"
+  },
+  {
+    "name": "elegant",
+    "code": "EL"
+  },
+  {
+    "name": "garden",
+    "code": "GD"
+  },
+  {
+    "name": "high plains",
+    "code": "HP"
+  },
+  {
+    "name": "icy snow",
+    "code": "IS"
+  },
+  {
+    "name": "jungle",
+    "code": "JG"
+  },
+  {
+    "name": "marine",
+    "code": "MR"
+  },
+  {
+    "name": "meadow",
+    "code": "MD"
+  },
+  {
+    "name": "modern",
+    "code": "MO"
+  },
+  {
+    "name": "monsoon",
+    "code": "MS"
+  },
+  {
+    "name": "ocean",
+    "code": "OC"
+  },
+  {
+    "name": "polar",
+    "code": "PL"
+  },
+  {
+    "name": "river",
+    "code": "RV"
+  },
+  {
+    "name": "sandstorm",
+    "code": "SS"
+  },
+  {
+    "name": "savanna",
+    "code": "SV"
+  },
+  {
+    "name": "sun",
+    "code": "SN"
+  },
+  {
+    "name": "tundra",
+    "code": "TD"
+  }
+]
