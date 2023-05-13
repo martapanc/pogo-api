@@ -34,8 +34,8 @@ model Player {
   location       String?
   region         Region    @relation(fields: [regionId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   regionId       Int
-  wantedHighPrio Region[]  @relation("PlayerHighPrioRegions")
-  wantedLowPrio  Region[]  @relation("PlayerLowPrioRegions")
+  wantedHighPrio PlayerHighPrioRegions[]
+  wantedLowPrio  PlayerLowPrioRegions[]
 }
 
 model Region {
@@ -43,6 +43,26 @@ model Region {
   name           String
   code           String
   players        Player[]
-  highPrioPlayer Player[] @relation("PlayerHighPrioRegions")
-  lowPrioPlayer  Player[] @relation("PlayerLowPrioRegions")
+  highPrioPlayer PlayerHighPrioRegions[]
+  lowPrioPlayer  PlayerLowPrioRegions[]
+}
+
+model PlayerHighPrioRegions {
+  player Player @relation(fields: [playerId], references: [id])
+  playerId Int
+  region Region @relation(fields: [regionId], references: [id])
+  regionId Int
+
+
+  @@id([playerId, regionId])
+}
+
+model PlayerLowPrioRegions {
+  player Player @relation(fields: [playerId], references: [id])
+  playerId Int
+  region Region @relation(fields: [regionId], references: [id])
+  regionId Int
+
+
+  @@id([playerId, regionId])
 }

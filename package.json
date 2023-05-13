@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "dev": "ts-node src/index.ts"
+    "dev": "ts-node src/index.ts",
+    "dbseed": "npx prisma db seed",
+    "dbreset": "npx prisma db push --force-reset",
+    "dbrestore": "yarn dbreset && yarn dbseed"
   },
   "dependencies": {
     "@prisma/client": "4.14.0",
