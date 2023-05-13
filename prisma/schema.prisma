@@ -27,16 +27,22 @@ model Post {
 }
 
 model Player {
-  id          Int      @id @default(autoincrement())
-  createdAt   DateTime @default(now())
-  nickname    String
-  trainerCode String
-  location    String?
-  region      String
+  id             Int       @id @default(autoincrement())
+  createdAt      DateTime? @default(now())
+  nickname       String
+  trainerCode    String
+  location       String?
+  region         Region    @relation(fields: [regionId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  regionId       Int
+  wantedHighPrio Region[]  @relation("PlayerHighPrioRegions")
+  wantedLowPrio  Region[]  @relation("PlayerLowPrioRegions")
 }
 
 model Region {
-  id   Int    @id @default(autoincrement())
-  name String
-  code String
+  id             Int      @id
+  name           String
+  code           String
+  players        Player[]
+  highPrioPlayer Player[] @relation("PlayerHighPrioRegions")
+  lowPrioPlayer  Player[] @relation("PlayerLowPrioRegions")
 }

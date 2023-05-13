@@ -1,73 +1,91 @@
 [
   {
+    "id": 1,
     "name": "archipelago",
     "code": "AP"
   },
   {
+    "id": 2,
     "name": "continental",
     "code": "CN"
   },
   {
+    "id": 3,
     "name": "elegant",
     "code": "EL"
   },
   {
+    "id": 4,
     "name": "garden",
     "code": "GD"
   },
   {
+    "id": 5,
     "name": "high plains",
     "code": "HP"
   },
   {
+    "id": 6,
     "name": "icy snow",
     "code": "IS"
   },
   {
+    "id": 7,
     "name": "jungle",
     "code": "JG"
   },
   {
+    "id": 8,
     "name": "marine",
     "code": "MR"
   },
   {
+    "id": 9,
     "name": "meadow",
     "code": "MD"
   },
   {
+    "id": 10,
     "name": "modern",
     "code": "MO"
   },
   {
+    "id": 11,
     "name": "monsoon",
     "code": "MS"
   },
   {
+    "id": 12,
     "name": "ocean",
     "code": "OC"
   },
   {
+    "id": 13,
     "name": "polar",
     "code": "PL"
   },
   {
+    "id": 14,
     "name": "river",
     "code": "RV"
   },
   {
+    "id": 15,
     "name": "sandstorm",
     "code": "SS"
   },
   {
+    "id": 16,
     "name": "savanna",
     "code": "SV"
   },
   {
+    "id": 17,
     "name": "sun",
     "code": "SN"
   },
   {
+    "id": 18,
     "name": "tundra",
     "code": "TD"
   }
