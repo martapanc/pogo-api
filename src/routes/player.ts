@@ -2,6 +2,7 @@ import {Prisma, PrismaClient} from "@prisma/client";
 import express from "express";
 import {PlayerFetchingError} from "../models/PlayerFetchingError";
 import {PlayerFetchResult} from "../models/PlayerFetchResult";
+import {getPlayersFromRegion, getRegionFromName} from "../service/matchingService";
 
 const prisma = new PrismaClient();
 
@@ -48,9 +49,25 @@ router.get('/players/:id', async (req, res) => {
     }
 });
 
+router.get('/players/from/:regionName', async (req, res) => {
+    const regionName = req.params.regionName.toLowerCase();
+    const region = await getRegionFromName(regionName)
 
-router.get('/players/looking-for-region/:name', async (req, res) => {
-    const regionName = req.params.name.toLowerCase();
+    if (!region) {
+        res.status(400).json({error: `Region '${regionName}' could not be found.`})
+    } else {
+        getPlayersFromRegion(region)
+            .then((players) => {
+                res.json(players);
+            })
+            .catch((err) => {
+                res.status(404).json({error: `Error finding matching players: ${err}`} as PlayerFetchingError);
+            });
+    }
+});
+
+router.get('/players/looking-for/:regionName', async (req, res) => {
+    const regionName = req.params.regionName.toLowerCase();
     const region = await prisma.region.findFirst({
         where: {
             name: regionName
@@ -95,9 +112,9 @@ router.get('/players/looking-for-region/:name', async (req, res) => {
                 lowPrioPlayers
             } as PlayerFetchResult);
         }).catch((err) => {
-           res.status(404).json({error: `Error finding matching players: ${err}`} as PlayerFetchingError);
+            res.status(404).json({error: `Error finding matching players: ${err}`} as PlayerFetchingError);
         })
     }
-})
+});
 
 export default router;
