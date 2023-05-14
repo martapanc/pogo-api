@@ -146,14 +146,13 @@ app.get('/feed', async (req, res) => {
 })
 
 app.post('/region', async (req, res) => {
-    const name = req.body.name
-    const code = req.body.code
+    let createRegionData: Prisma.RegionCreateInput = {
+        name: req.body.name,
+        code: req.body.code
+    };
 
     const region = await prisma.region.create({
-        data: {
-            name,
-            code
-        }
+        data: createRegionData
     })
 
     res.json(region)
