@@ -13,10 +13,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Use Node.js 19
-        uses: actions/setup-node@v3
-        with:
-          node-version: 19.x
-          cache: 'yarn'
-      - run: yarn
-#      - run: yarn test
+      - name: Build Docker
+        run: docker-compose build
+
+      - name: Run tests
+        run: docker-compose run backend yarn test
