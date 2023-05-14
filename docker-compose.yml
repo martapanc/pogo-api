@@ -1,17 +1,6 @@
 version: "0.1"
 
 services:
-  backend:
-    build:
-      context: .
-    ports:
-      - 3002:3001
-    command: yarn dev
-    environment:
-      HOST: postgres:5432
-    depends_on:
-      - database
-
   database:
     image: postgres:14-alpine
     container_name: "postgres"
@@ -21,3 +10,23 @@ services:
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "HYgTN_W6dL7KyG7"
       POSTGRES_DB: "pogo-connect-dev"
+#    healthcheck:
+#      test: [ "CMD-SHELL", "pg_isready", "-d", "pogo-connect-dev" ]
+#      interval: 30s
+#      timeout: 60s
+#      retries: 3
+#      start_period: 80s
+
+  backend:
+#    profiles: [ "api" ]
+    build:
+      context: .
+    ports:
+      - 3002:3002
+#    environment:
+#      HOST: postgres:5432
+#      PORT: 3002
+    depends_on:
+      - database
+#      database:
+#        condition: service_healthy

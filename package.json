@@ -4,6 +4,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "ts-node src/index.ts",
+    "db:migrate": "npx prisma migrate dev",
     "db:seed": "npx prisma db seed",
     "db:reset": "npx prisma db push --force-reset",
     "db:restore": "yarn db:reset && yarn db:seed",
