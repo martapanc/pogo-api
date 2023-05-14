@@ -1,4 +1,4 @@
-import {PrismaClient} from "@prisma/client";
+import {Prisma, PrismaClient} from "@prisma/client";
 import express from "express";
 
 const prisma = new PrismaClient();
@@ -6,9 +6,27 @@ const prisma = new PrismaClient();
 const router = express.Router();
 
 router.get('/players', async (req, res) => {
-    const players = await prisma.player.findMany();
+    const {search, orderBy} = req.query
 
-    res.json(players);
+    const or: Prisma.PlayerWhereInput = search
+        ? {
+            OR: [
+                {nickname: {contains: search as string}},
+                {location: {contains: search as string}},
+            ],
+        }
+        : {};
+
+    const players = await prisma.player.findMany({
+        where: {
+            ...or
+        },
+        orderBy: {
+            id: orderBy as Prisma.SortOrder || 'asc'
+        }
+    });
+
+    res.json(players.sort(p => p.id));
 });
 
 router.get('/players/:id', async (req, res) => {

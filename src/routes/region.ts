@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 const router = express.Router();
 
 router.get('/regions', async (req, res) => {
-    const {search, skip, take, orderBy} = req.query
+    const {search, skip, take} = req.query
 
     const or: Prisma.RegionWhereInput = search
         ? {
@@ -24,7 +24,7 @@ router.get('/regions', async (req, res) => {
         take: Number(take) || undefined,
         skip: Number(skip) || undefined,
         orderBy: {
-            name: orderBy as Prisma.SortOrder,
+            name: 'asc',
         },
     });
 
