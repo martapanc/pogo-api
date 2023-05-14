@@ -19,7 +19,7 @@ async function main() {
         .then((regions) => {
             console.log(`Created ${regions.length} regions\n---`);
 
-            const players = 20;
+            const players = 40;
             const playerPromises = [];
 
             for (let i = 0; i < players; i++) {

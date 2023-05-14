@@ -1,0 +1,23 @@
+version: "0.1"
+
+services:
+  backend:
+    build:
+      context: .
+    ports:
+      - 3002:3001
+    command: yarn dev
+    environment:
+      HOST: postgres:5432
+    depends_on:
+      - database
+
+  database:
+    image: postgres:14-alpine
+    container_name: "postgres"
+    ports:
+      - 2345:5432
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "HYgTN_W6dL7KyG7"
+      POSTGRES_DB: "pogo-connect-dev"
