@@ -1,4 +1,4 @@
-import {Prisma, PrismaClient, Region} from '@prisma/client'
+import {Prisma, PrismaClient} from '@prisma/client'
 import regions from '../prisma/data/regions.json';
 import {faker} from '@faker-js/faker';
 
@@ -11,7 +11,9 @@ async function main() {
 
     const regionPromises = regionData.map(async (r) => {
         const region = await prisma.region.create({data: r});
-        console.log(`Added Region '${region.name}' (${region.code}) with id: ${region.id}`);
+
+        console.log(`Added Region '${region.displayName}' (${region.code}) with id: ${region.id}`);
+
         return region;
     });
 
@@ -81,11 +83,6 @@ async function main() {
         });
 }
 
-function randomRegion(regions: Region[]): Region {
-    const index = Math.floor(Math.random() * regions.length);
-    return regions[index]
-}
-
 main()
     .then(async () => {
         await prisma.$disconnect()
@@ -94,4 +91,4 @@ main()
         console.error(e)
         await prisma.$disconnect()
         process.exit(1)
-    })
+    });

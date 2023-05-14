@@ -2,91 +2,109 @@
   {
     "id": 1,
     "name": "archipelago",
+    "displayName": "Archipelago",
     "code": "AP"
   },
   {
     "id": 2,
     "name": "continental",
+    "displayName": "Continental",
     "code": "CN"
   },
   {
     "id": 3,
     "name": "elegant",
+    "displayName": "Elegant",
     "code": "EL"
   },
   {
     "id": 4,
     "name": "garden",
+    "displayName": "Garden",
     "code": "GD"
   },
   {
     "id": 5,
-    "name": "high plains",
+    "name": "high-plains",
+    "displayName": "High Plains",
     "code": "HP"
   },
   {
     "id": 6,
-    "name": "icy snow",
+    "name": "icy-snow",
+    "displayName": "Icy Snow",
     "code": "IS"
   },
   {
     "id": 7,
     "name": "jungle",
+    "displayName": "Jungle",
     "code": "JG"
   },
   {
     "id": 8,
     "name": "marine",
+    "displayName": "Marine",
     "code": "MR"
   },
   {
     "id": 9,
     "name": "meadow",
+    "displayName": "Meadow",
     "code": "MD"
   },
   {
     "id": 10,
     "name": "modern",
+    "displayName": "Modern",
     "code": "MO"
   },
   {
     "id": 11,
     "name": "monsoon",
+    "displayName": "Monsoon",
     "code": "MS"
   },
   {
     "id": 12,
     "name": "ocean",
+    "displayName": "Ocean",
     "code": "OC"
   },
   {
     "id": 13,
     "name": "polar",
+    "displayName": "Polar",
     "code": "PL"
   },
   {
     "id": 14,
     "name": "river",
+    "displayName": "River",
     "code": "RV"
   },
   {
     "id": 15,
     "name": "sandstorm",
+    "displayName": "Sandstorm",
     "code": "SS"
   },
   {
     "id": 16,
     "name": "savanna",
+    "displayName": "Savanna",
     "code": "SV"
   },
   {
     "id": 17,
     "name": "sun",
+    "displayName": "Sun",
     "code": "SN"
   },
   {
     "id": 18,
     "name": "tundra",
+    "displayName": "Tundra",
     "code": "TD"
   }
 ]

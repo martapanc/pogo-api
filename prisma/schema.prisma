@@ -22,6 +22,7 @@ model Player {
 model Region {
   id             Int                     @id
   name           String
+  displayName    String
   code           String
   players        Player[]
   highPrioPlayer PlayerHighPrioRegions[]
