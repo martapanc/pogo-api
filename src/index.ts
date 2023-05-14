@@ -145,19 +145,6 @@ app.get('/feed', async (req, res) => {
     res.json(posts)
 })
 
-app.post('/region', async (req, res) => {
-    let createRegionData: Prisma.RegionCreateInput = {
-        name: req.body.name,
-        code: req.body.code
-    };
-
-    const region = await prisma.region.create({
-        data: createRegionData
-    })
-
-    res.json(region)
-})
-
 app.get('/region', async (req, res) => {
     const {search, skip, take, orderBy} = req.query
 

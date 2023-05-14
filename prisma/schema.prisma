@@ -39,7 +39,7 @@ model Player {
 }
 
 model Region {
-  id             Int      @id @default(autoincrement())
+  id             Int      @id
   name           String
   code           String
   players        Player[]
