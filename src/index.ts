@@ -18,3 +18,5 @@ const port = 3001;
 app.listen(port, () =>
     console.log(`🚀 Server ready at: http://localhost:${port}`)
 )
+
+export default app;
