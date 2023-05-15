@@ -4,13 +4,13 @@ import {PlayerFetchResult} from "../models/PlayerFetchResult";
 import {
     getAllPlayers,
     getPlayer,
-    getPlayersFromRegion, getPlayersFromRegionWithWantedHighPrioRegion, getPlayersFromRegionWithWantedLowPrioRegion,
+    getPlayersFromRegion,
+    getPlayersFromRegionWithWantedHighPrioRegion,
+    getPlayersFromRegionWithWantedLowPrioRegion,
     getPlayersWithWantedHighPrioRegion,
-    getPlayersWithWantedLowPrioRegion,
-    getRegionFromName
-} from "../service/matchingService";
-import {fr} from "@faker-js/faker";
-import region from "./region";
+    getPlayersWithWantedLowPrioRegion
+} from "../service/PlayerService";
+import {getRegionFromName} from "../service/RegionService";
 
 const router = express.Router();
 
