@@ -4,8 +4,9 @@ import admin from "../auth/Firebase";
 declare global {
     namespace Express {
         interface Request {
-            authToken?: string
+            authToken?: string;
             authId?: string;
+            user?: string;
         }
     }
 }
@@ -18,7 +19,7 @@ export function getAuthToken(req: Request, res: Response, next: NextFunction) {
     next();
 }
 
-export function checkIfAuthenticated(req: any, res: Response, next: NextFunction) {
+export function checkIfAuthenticated(req: Request, res: Response, next: NextFunction) {
     getAuthToken(req, res, async () => {
         try {
             const {authToken} = req;
@@ -33,4 +34,18 @@ export function checkIfAuthenticated(req: any, res: Response, next: NextFunction
                 .send({error: 'You are not authorized to make this request.'});
         }
     });
+}
+
+export function verifyToken(req: Request, res: Response, next: NextFunction) {
+    const token = req.headers.authorization;
+
+    admin.auth().verifyIdToken(token)
+        .then((decodedToken: any) => {
+            req.user = decodedToken;
+            next();
+        })
+        .catch((error: any) => {
+            console.log('Error verifying token:', error);
+            res.sendStatus(401);
+        });
 }
