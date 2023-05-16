@@ -151,7 +151,7 @@ You can now use your `PrismaClient` instance to perform operations against the n
 
 #### 2.1 Add the API endpoint to your app
 
-Update your `index.ts` file by adding a new endpoint to your API:
+Update your `app.ts` file by adding a new endpoint to your API:
 
 ```ts
 app.post('/user/:id/profile', async (req, res) => {

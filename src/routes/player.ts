@@ -9,8 +9,8 @@ import {
     getPlayersFromRegionWithWantedLowPrioRegion,
     getPlayersWithWantedHighPrioRegion,
     getPlayersWithWantedLowPrioRegion
-} from "../service/PlayerService";
-import {getRegionFromName} from "../service/RegionService";
+} from "../services/PlayerService";
+import {getRegionFromName} from "../services/RegionService";
 
 const router = express.Router();
 
