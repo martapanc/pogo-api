@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "dev": "ts-node src/index.ts",
-    "dev:watch": "nodemon src/index.ts",
+    "dev": "ts-node src/app.ts",
+    "dev:watch": "nodemon src/app.ts",
     "db:migrate": "npx prisma migrate dev",
     "db:seed": "npx prisma db seed",
     "db:reset": "npx prisma db push --force-reset",
