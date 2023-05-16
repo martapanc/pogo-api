@@ -57,7 +57,7 @@ export function getPlayersWithWantedHighPrioRegion(region: Region) {
 export function getPlayersWithWantedLowPrioRegion(region: Region) {
     return prisma.player.findMany({
         where: {
-            wantedHighPrio: {
+            wantedLowPrio: {
                 some: {
                     regionId: {
                         in: [region.id]
@@ -92,7 +92,7 @@ export function getPlayersFromRegionWithWantedHighPrioRegion(from: Region, wante
 export function getPlayersFromRegionWithWantedLowPrioRegion(from: Region, wanted: Region) {
     return prisma.player.findMany({
         where: {
-            wantedHighPrio: {
+            wantedLowPrio: {
                 some: {
                     regionId: {
                         in: [wanted.id]
