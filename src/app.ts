@@ -1,4 +1,5 @@
 import express from 'express'
+import accountRouter from "./routes/account";
 import regionRouter from "./routes/region";
 import playerRouter from "./routes/player";
 import statusRouter from "./routes/status";
@@ -12,6 +13,8 @@ app.use(express.json())
 
 app.use('/', statusRouter)
 app.use('/api', statusRouter)
+
+app.use('/', accountRouter);
 
 app.use('/api', regionRouter)
 app.use('/api', playerRouter)

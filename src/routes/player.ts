@@ -11,10 +11,11 @@ import {
     getPlayersWithWantedLowPrioRegion
 } from "../services/PlayerService";
 import {getRegionFromName} from "../services/RegionService";
+import {checkIfAuthenticated} from "../middleware/Auth";
 
 const router = express.Router();
 
-router.get('/players', async (req, res) => {
+router.get('/players', checkIfAuthenticated, async (req, res) => {
     const {search, orderBy} = req.query
 
     const players = await getAllPlayers(search, orderBy);
