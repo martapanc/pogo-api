@@ -35,17 +35,3 @@ export function checkIfAuthenticated(req: Request, res: Response, next: NextFunc
         }
     });
 }
-
-export function verifyToken(req: Request, res: Response, next: NextFunction) {
-    const token = req.headers.authorization;
-
-    admin.auth().verifyIdToken(token)
-        .then((decodedToken: any) => {
-            req.user = decodedToken;
-            next();
-        })
-        .catch((error: any) => {
-            console.log('Error verifying token:', error);
-            res.sendStatus(401);
-        });
-}

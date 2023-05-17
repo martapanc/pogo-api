@@ -23,7 +23,7 @@ router.get('/players', checkIfAuthenticated, async (req, res) => {
     res.json(players.sort(p => p.id));
 });
 
-router.get('/players/:id', async (req, res) => {
+router.get('/players/:id', checkIfAuthenticated, async (req, res) => {
     try {
         const id = parseInt(req.params.id);
 
@@ -36,7 +36,7 @@ router.get('/players/:id', async (req, res) => {
     }
 });
 
-router.get('/players/from/:regionName', async (req, res) => {
+router.get('/players/from/:regionName', checkIfAuthenticated, async (req, res) => {
     const regionName = req.params.regionName.toLowerCase();
 
     const region = await getRegionFromName(regionName)
@@ -54,7 +54,7 @@ router.get('/players/from/:regionName', async (req, res) => {
     }
 });
 
-router.get('/players/looking-for/:regionName', async (req, res) => {
+router.get('/players/looking-for/:regionName', checkIfAuthenticated, async (req, res) => {
     const regionName = req.params.regionName.toLowerCase();
 
     const region = await getRegionFromName(regionName);
@@ -78,7 +78,7 @@ router.get('/players/looking-for/:regionName', async (req, res) => {
     }
 });
 
-router.get('/players/from/:fromRegion/looking-for/:wantedRegion', async (req, res) => {
+router.get('/players/from/:fromRegion/looking-for/:wantedRegion', checkIfAuthenticated, async (req, res) => {
     const fromRegionName = req.params.fromRegion.toLowerCase();
     const wantedRegionName = req.params.wantedRegion.toLowerCase();
 
