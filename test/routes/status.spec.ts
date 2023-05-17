@@ -2,7 +2,7 @@ import {describe} from "node:test";
 import request from "supertest";
 import {Server} from "http";
 
-import app from "../index";
+import app from "../../src/app";
 
 describe('API Status endpoint', () => {
     let server: Server;
