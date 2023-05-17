@@ -1,12 +1,12 @@
 import express, {Request, Response} from "express";
 import admin from "../auth/Firebase";
-import {User} from "../models/User";
+import {Login} from "../models/Login";
 import {checkIfAdmin} from "../middleware/Auth";
 
 const router = express.Router();
 
 router.post('/auth/signup', async function createUser(req: any, res: any): Promise<void> {
-    const user: User = req.body;
+    const user: Login = req.body;
 
     admin.auth().createUser({
         email: user.email,

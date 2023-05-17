@@ -7,6 +7,13 @@ datasource db {
   url      = env("DATABASE_URL_WITH_SCHEMA")
 }
 
+model User {
+  id       Int     @id @default(autoincrement())
+  uuid     String  @unique
+  player   Player? @relation(fields: [playerId], references: [id])
+  playerId Int?    @unique
+}
+
 model Player {
   id             Int                     @id @default(autoincrement())
   createdAt      DateTime?               @default(now())
@@ -17,6 +24,7 @@ model Player {
   regionId       Int
   wantedHighPrio PlayerHighPrioRegions[]
   wantedLowPrio  PlayerLowPrioRegions[]
+  User           User?
 }
 
 model Region {

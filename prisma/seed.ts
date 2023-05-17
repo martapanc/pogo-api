@@ -1,10 +1,48 @@
-import {Prisma, PrismaClient} from '@prisma/client'
+import {Player, Prisma, PrismaClient, Region} from '@prisma/client'
 import regions from '../prisma/data/regions.json';
 import {faker} from '@faker-js/faker';
 
 const prisma = new PrismaClient()
 
 const regionData: Prisma.RegionCreateInput[] = regions;
+
+function getPlayerPromise(player: {
+    nickname: string;
+    location: string;
+    region: { connect: { id: number } };
+    trainerCode: string
+}, regions: Region[]) {
+    return prisma.player.create({data: player}).then((createdPlayer) => {
+
+        const shuffledRegions = regions.map(r => r.id).sort(() => 0.5 - Math.random());
+        const hpRegions = shuffledRegions.slice(0, 5);
+        const lpRegions = shuffledRegions.slice(5);
+
+        const hpRegionPromises = hpRegions.map(async (id) => {
+            return prisma.playerHighPrioRegions.create({
+                data: {
+                    player: {connect: {id: createdPlayer.id}},
+                    region: {connect: {id: id}},
+                },
+            });
+        });
+
+        const lpRegionPromises = lpRegions.map(async (id) => {
+            return prisma.playerLowPrioRegions.create({
+                data: {
+                    player: {connect: {id: createdPlayer.id}},
+                    region: {connect: {id: id}},
+                },
+            });
+        });
+
+        return Promise.all([Promise.all(hpRegionPromises), Promise.all(lpRegionPromises)]).then(([regions1, regions2]) => {
+            console.log(`Added Player ${createdPlayer.nickname} [${createdPlayer.trainerCode}] of Region ${createdPlayer.regionId}`);
+            console.log(`*  High Prio regions: ${regions1.map((r) => r.regionId)}`);
+            console.log(`*  Low Prio regions: ${regions2.map((r) => r.regionId)}`);
+        });
+    });
+}
 
 async function main() {
     console.log(`Start seeding ...`)
@@ -36,39 +74,21 @@ async function main() {
                     }
                 };
 
-                const playerPromise = prisma.player.create({data: player}).then((createdPlayer) => {
-
-                    const shuffledRegions = regions.map(r => r.id).sort(() => 0.5 - Math.random());
-                    const hpRegions = shuffledRegions.slice(0, 5);
-                    const lpRegions = shuffledRegions.slice(5);
-
-                    const hpRegionPromises = hpRegions.map(async (id) => {
-                        return prisma.playerHighPrioRegions.create({
-                            data: {
-                                player: {connect: {id: createdPlayer.id}},
-                                region: {connect: {id: id}},
-                            },
-                        });
-                    });
-
-                    const lpRegionPromises = lpRegions.map(async (id) => {
-                        return prisma.playerLowPrioRegions.create({
-                            data: {
-                                player: {connect: {id: createdPlayer.id}},
-                                region: {connect: {id: id}},
-                            },
-                        });
-                    });
-
-                    return Promise.all([Promise.all(hpRegionPromises), Promise.all(lpRegionPromises)]).then(([regions1, regions2]) => {
-                        console.log(`Added Player ${createdPlayer.nickname} [${createdPlayer.trainerCode}] of Region ${createdPlayer.regionId}`);
-                        console.log(`*  High Prio regions: ${regions1.map((r) => r.regionId)}`);
-                        console.log(`*  Low Prio regions: ${regions2.map((r) => r.regionId)}`);
-                    });
-                });
-
+                const playerPromise = getPlayerPromise(player, regions);
                 playerPromises.push(playerPromise);
             }
+
+            const me = {
+                nickname: 'PancakeMarta',
+                trainerCode: '123456789101',
+                location: 'Italy',
+                region: {
+                    connect: {
+                        id: 9
+                    }
+                }
+            }
+            playerPromises.push(getPlayerPromise(me, regions));
 
             Promise.all(playerPromises)
                 .then(() => {
