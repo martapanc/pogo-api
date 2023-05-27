@@ -26,7 +26,7 @@ router.get('/users/:id', checkIfAdmin, async (req, res) => {
     }
 });
 
-router.get('/users/:uuid', checkIfAdmin, async (req, res) => {
+router.get('/users/uuid/:uuid', checkIfAdmin, async (req, res) => {
     const uuid = req.params.uuid;
     const user = await getUserByUuid(uuid);
 
