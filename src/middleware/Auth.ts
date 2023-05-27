@@ -36,6 +36,27 @@ export function checkIfAuthenticated(req: Request, res: Response, next: NextFunc
     });
 }
 
+//TODO
+export function checkIfPlayer(req: Request, res: Response, next: NextFunction) {
+    getAuthToken(req, res, async () => {
+        try {
+            const { authToken } = req;
+            const userInfo = await admin.auth().verifyIdToken(authToken);
+            const playerId = req.headers['player-id'];
+
+            if (userInfo.uid === playerId) {
+                req.authId = userInfo.uid;
+                return next();
+            } else {
+                return res.status(403).send({ error: 'You are not authorized to access this resource.' });
+            }
+        } catch (e) {
+            return res.status(401).send({ error: 'You are not authenticated.' });
+        }
+    });
+}
+
+
 export function checkIfAdmin(req: Request, res: Response, next: NextFunction) {
     getAuthToken(req, res, async () => {
         try {

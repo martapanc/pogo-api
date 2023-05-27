@@ -52,6 +52,14 @@ export async function deleteUser(userData: UserData) {
     }
 }
 
+export function getUserFromPlayer(playerId: number) {
+    return prisma.user.findUnique({
+        where: {
+            playerId
+        }
+    })
+}
+
 export function matchUserWithPlayer(uuid: string, playerId: number) {
     return prisma.user.update({
         where: {

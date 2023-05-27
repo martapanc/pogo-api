@@ -1,4 +1,4 @@
-import {Prisma, PrismaClient, Region} from "@prisma/client";
+import {Player, Prisma, PrismaClient, Region} from "@prisma/client";
 
 const prisma = new PrismaClient();
 
@@ -105,4 +105,15 @@ export function getPlayersFromRegionWithWantedLowPrioRegion(from: Region, wanted
             id: 'asc'
         }
     });
+}
+
+export async function createNewPlayer(newPlayer: Player) {
+    try {
+        return prisma.player.create({
+            data: newPlayer
+        })
+    } catch (error) {
+        console.error('Prisma error creating Player: ', error);
+        throw error;
+    }
 }
