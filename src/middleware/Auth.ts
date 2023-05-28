@@ -1,5 +1,6 @@
 import {NextFunction, Request, Response} from "express";
 import admin from "../auth/Firebase";
+import {getUserFromPlayer} from "../services/UserService";
 
 declare global {
     namespace Express {
@@ -36,22 +37,24 @@ export function checkIfAuthenticated(req: Request, res: Response, next: NextFunc
     });
 }
 
-//TODO
 export function checkIfPlayer(req: Request, res: Response, next: NextFunction) {
     getAuthToken(req, res, async () => {
-        try {
-            const { authToken } = req;
-            const userInfo = await admin.auth().verifyIdToken(authToken);
-            const playerId = req.headers['player-id'];
+        const playerId = parseInt(req.params.id);
 
-            if (userInfo.uid === playerId) {
-                req.authId = userInfo.uid;
-                return next();
-            } else {
-                return res.status(403).send({ error: 'You are not authorized to access this resource.' });
-            }
-        } catch (e) {
-            return res.status(401).send({ error: 'You are not authenticated.' });
+        if (!isNaN(playerId)) {
+            await getUserFromPlayer(
+                playerId
+            ).then(async (user) => {
+                if (user && user.uuid === req.authId) {
+                    return next();
+                } else {
+                    return res.status(403).json({error: 'You are not authorized to view player info.'});
+                }
+            }).catch((err: any) => {
+                res.status(404).json({error: `Error finding User: ${err}`});
+            });
+        } else {
+            res.status(400).json({error: `Error parsing id: '${req.params.id}'`});
         }
     });
 }
@@ -70,11 +73,7 @@ export function checkIfAdmin(req: Request, res: Response, next: NextFunction) {
 
             throw new Error('unauthorized');
         } catch (e) {
-            return res.status(401).send({ error: 'You are not authorized to make this request' });
+            return res.status(401).send({error: 'You are not authorized to make this request'});
         }
     });
-}
-
-export async function makeUserAdmin(req: Request, res: Response) {
-
 }

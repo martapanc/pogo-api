@@ -12,8 +12,8 @@ import {
     getPlayersWithWantedLowPrioRegion
 } from "../services/PlayerService";
 import {getRegionFromName} from "../services/RegionService";
-import {checkIfAuthenticated} from "../middleware/Auth";
-import {getUserFromPlayer, matchUserWithPlayer} from "../services/UserService";
+import {checkIfAuthenticated, checkIfPlayer} from "../middleware/Auth";
+import {matchUserWithPlayer} from "../services/UserService";
 import {Player} from "@prisma/client";
 
 const router = express.Router();
@@ -26,25 +26,22 @@ router.get('/players', checkIfAuthenticated, async (req, res) => {
     res.json(players.sort(p => p.id));
 });
 
-router.get('/players/:id', checkIfAuthenticated, async (req, res) => {
-    try {
-        const playerId = parseInt(req.params.id);
+router.get('/players/:id', checkIfAuthenticated, checkIfPlayer, async (req, res) => {
+    const playerId = parseInt(req.params.id);
 
-        await getUserFromPlayer(
+    if (!isNaN(playerId)) {
+        await getPlayer(
             playerId
-        ).then(async (user) => {
-            if (user && user.uuid === req.authId) {
-                await getPlayer(playerId).then((player) => {
-                    res.json(player);
-                });
+        ).then((player) => {
+            if (player) {
+                res.json(player);
             } else {
-                res.status(401).json({error: "Not authorised to view player info."});
+                res.status(404).json({error: `Player with id ${playerId} not found.`})
             }
         }).catch((err: any) => {
-            res.status(404).json({error: `Error finding player: ${err}`} as PlayerFetchingError);
+            res.status(400).json({error: `Error fetching Player info: ${err}`})
         });
-
-    } catch (error) {
+    } else {
         res.status(400).json({error: `Error parsing id: '${req.params.id}'`});
     }
 });
