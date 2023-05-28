@@ -2,7 +2,7 @@ import express from "express";
 import {checkIfAdmin} from "../middleware/Auth";
 import {getAllUsers, getUserById, getUserByUuid, matchUserWithPlayer} from "../services/UserService";
 import {User} from "@prisma/client";
-import {getPlayer} from "../services/PlayerService";
+import {fetchPlayer} from "../services/PlayerService";
 
 const router = express.Router();
 
@@ -37,7 +37,7 @@ router.put('/users/:uuid/match/:playerId', checkIfAdmin, async (req, res) => {
 
     if (!isNaN(playerId)) {
         const uuid = req.params.uuid;
-        const player = await getPlayer(playerId);
+        const player = await fetchPlayer(playerId);
 
         if (player) {
             matchUserWithPlayer(uuid, playerId)
