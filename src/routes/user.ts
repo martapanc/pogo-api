@@ -15,13 +15,12 @@ router.get('/users', checkIfAdmin, async (req, res) => {
 });
 
 router.get('/users/:id', checkIfAdmin, async (req, res) => {
-    try {
-        const id = parseInt(req.params.id);
-        const user = await getUserById(id);
+    const userId = parseInt(req.params.id);
 
-        res.json(user ? user : {error: `User with id ${id} not found.`});
-
-    } catch (error) {
+    if (!isNaN(userId)) {
+        const user = await getUserById(userId);
+        res.json(user ? user : {error: `User with id ${userId} not found.`});
+    } else {
         res.status(400).json({error: `Error parsing id: '${req.params.id}'`});
     }
 });
@@ -34,9 +33,10 @@ router.get('/users/uuid/:uuid', checkIfAdmin, async (req, res) => {
 });
 
 router.put('/users/:uuid/match/:playerId', checkIfAdmin, async (req, res) => {
-    try {
+    const playerId = parseInt(req.params.playerId);
+
+    if (!isNaN(playerId)) {
         const uuid = req.params.uuid;
-        const playerId = parseInt(req.params.playerId);
         const player = await getPlayer(playerId);
 
         if (player) {
@@ -44,13 +44,12 @@ router.put('/users/:uuid/match/:playerId', checkIfAdmin, async (req, res) => {
                 .then((user) => {
                     res.json({message: `User '${uuid}' matched with playerId ${playerId}`})
                 }).catch((err) => {
-                    res.status(400).json({error: `Couldn't match user '${uuid}' with playerId ${playerId}.`});
-                })
+                res.status(400).json({error: `Couldn't match user '${uuid}' with playerId ${playerId}.`});
+            })
         } else {
             res.status(404).json({error: `Player with id ${playerId} not found.`});
         }
-
-    } catch (error) {
+    } else {
         res.status(400).json({error: `Error parsing id: '${req.params.id}'`});
     }
 })

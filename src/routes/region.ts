@@ -32,17 +32,20 @@ router.get('/regions', async (req, res) => {
 });
 
 router.get('/regions/:id', async (req, res) => {
-    try {
-        const id = parseInt(req.params.id);
+    const regionId = parseInt(req.params.id);
 
+    if (!isNaN(regionId)) {
         const region = await prisma.region.findUnique({
             where: {
-                id: id
+                id: regionId
             }
         })
-        res.status(404).json(region ? region : {error: `Region with id ${id} not found.`});
-
-    } catch (error) {
+        if (region) {
+            res.json(region);
+        } else {
+            res.status(404).json({error: `Region with id ${regionId} not found.`});
+        }
+    } else {
         res.status(400).json({error: `Error parsing id: '${req.params.id}'`});
     }
 });
