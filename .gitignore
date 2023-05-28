@@ -5,3 +5,4 @@ dist/
 *.env.prod
 .idea/
 */**/pogo-connect-api*
+sendgrid.env

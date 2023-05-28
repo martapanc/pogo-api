@@ -59,7 +59,6 @@ export function checkIfPlayer(req: Request, res: Response, next: NextFunction) {
     });
 }
 
-
 export function checkIfAdmin(req: Request, res: Response, next: NextFunction) {
     getAuthToken(req, res, async () => {
         try {
